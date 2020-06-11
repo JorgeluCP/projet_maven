@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- =============================================================== -->
+    <!-- Informations du projet -->
+    <!-- =============================================================== -->
+    <!-- ===== Informations Maven ===== -->
+    <groupId>org.exemple.demo</groupId>
+    <artifactId>projet_maven</artifactId>
+    <version>1.0-SNAPSHOT</version><!-- SNAPSHOT (quand on développe) à enlever quand on fera une release-->
+
+    <!-- ===== Informations générales du projet ===== -->
+    <name>Mon Application</name><!-- nom du projet -->
+    <description>La super application qui sert à faire ceci/cela...</description>
+    <url>http://www.exemple.org/mon-appli</url><!-- URL du projet ou de l'application en production. -->
+
+    <!-- ===== Organisation gérant le projet===== -->
+    <organization>
+        <name>Mon Entreprise</name>
+        <url>http://www.exemple.org</url>
+    </organization>
+
+    <!-- ===== Licences
+    Si vous travaillez comme prestataire de service, vous mettrez ici les informations du client pour lequel
+    vous développez le projet.
+    ===== -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <!-- =============================================================== -->
+    <!-- Properties
+     il est possible d'ajouter un peu de généricité dans tout cela grâce aux propriétés.
+     Celles-ci sont des sortes de constantes. Elles sont remplacées par leur valeur lors de l'exécution de Maven en
+     utilisant la notation ${maPropriete} (qui sera remplacée par la valeur de la propriété maPropriete).
+
+     Voici un exemple d'utilisation des propriétés : je voudrais utiliser dans mon projet un framework composé de
+     plusieurs bibliothèques mais ne définir qu'une seule fois sa version.
+     =============================================================== -->
+
+    <properties>
+        <maPropriete>la valeur de la propriété</maPropriete>
+        <uneAutrePropriete>la valeur de la propriété</uneAutrePropriete>
+
+        <apache.struts.version>2.5.10.1</apache.struts.version>
+    </properties>
+
+    <!--
+    Voici un exemple d'utilisation des propriétés : je voudrais utiliser dans mon projet un framework composé de
+    plusieurs bibliothèques mais ne définir qu'une seule fois sa version.
+    lEs noms des balises que l'on met dans properties, on peut les choisir nous memes
+
+    En plus des propriétés que vous pouvez définir vous-même grâce à la balise <properties>, il existe également des propriétés pré-définies :
+
+     * project.basedir : donne le chemin vers le répertoire de base du projet, c'est-à-dire la racine de votre projet où se trouve le fichier pom.xml.
+
+     * project.baseUri : donne le chemin vers le répertoire de base du projet, mais sous forme d'URI.
+
+     * maven.build.timestamp : donne l'horodatage du lancement du build Maven.
+     <properties>
+          <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
+     </properties>
+    -->
+
+    <dependencies>
+        <!-- ===== Apache Struts ===== -->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>${apache.struts.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-json-plugin</artifactId>
+            <version>${apache.struts.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!--
+     Propriétés particulières
+    ************************
+     Vous pouvez aussi accéder à des propriétés particulières grâce aux préfixes suivants :
+
+     env. : permet de renvoyer la valeur d'une variable d'environnement. Par exemple, ${env.PATH} renvoie la valeur
+     de la variable d'environnement PATH.
+
+     project. : renvoie la valeur d'une balise dans le fichier pom.xml du projet, en utilisant le point (.) comme
+     séparateur de chemin pour les sous-balises. Par exemple,
+
+         <project>
+             <organization>
+                  <name>1.0</name>
+             </organization>
+         </project>
+
+     est accessible via               ${project.organization.name}.
+
+     settings. : renvoie la valeur d'une balise dans le(s) fichier(s) settings.xml utilisé(s) par Maven. Utilise la
+     notation pointée comme pour les propriétés de project.
+
+     java. : renvoie la valeur d'une propriété système de Java. Ces propriétés sont les mêmes que celles accessibles
+     via java.lang.System.getProperties(). Par exemple, ${java.version} renvoie la version de Java. Pour plus de détails,
+     consultez la JavaDoc.
+    -->
+
+    <!--
+    La plupart des conventions établies par Maven (chemin des sources, chemin de génération...) sont mises en œuvre
+    grâce au Super POM. En effet, de base, le POM d'un projet hérite du Super POM qui définit les valeurs par défaut
+    que va utiliser Maven.
+
+   *********************************************************************************************************************
+    Ne vous étonnez donc pas si ${project.build.directory} vous renvoie une valeur alors que vous ne l'avez pas définie dans
+    votre fichier pom.xml. Elle provient du Super POM !
+    *******************************************************************************************************************
+
+    Enfin, sachez que certaines propriétés permettent de définir des configurations par défaut de Maven ou de certains
+    plugins. C'est le cas par exemple de la propriété project.build.sourceEncoding ajoutée par l'archétype quickstart
+    lors du mvn archetype:generate. Je vous en parlerai en temps voulu dans les différents chapitres de ce cours.
+    -->
+
+    <!-- =========================================================================================================== -->
+    <!--                                                    Build                                                    -->
+    <!-- =========================================================================================================== -->
+    <!--
+    En plus des informations de base et des propriétés, vous pouvez paramétrer les différents éléments du processus de
+    construction de Maven, qu'on appelle le build.
+
+     J'introduis simplement le build dans ce chapitre, car la deuxième partie du cours lui est consacrée. Je rentrerai
+     plus dans le détail à ce moment-là. :)
+
+     La configuration du build se fait grâce à la balise <build> et ses sous-balises.
+
+     Voici un exemple où je définis un chemin de sortie autre que celui par défaut (${project.basedir}/target) :
+    -->
+
+    <!--
+                                 <build>
+                                     <directory>${project.basedir}/output</directory>
+                                 </build>
+    -->
+    <!--
+      Si je reprends le premier projet Maven que nous avons créé dans le chapitre précédant, je peux, par exemple,
+      rendre le JAR généré exécutable en demandant à Maven d'indiquer la classe Main dans le Manifest du JAR :
+    -->
+    <build>
+        <!-- <directory>${project.basedir}/output</directory> -->
+        <!-- Gestion des plugins (version) -->
+        <pluginManagement>
+            <plugins>
+                <!-- Plugin responsable de la génération du fichier JAR -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <!-- Création du Manifest pour la définition de la classe Main -->
+                        <manifest>
+                            <mainClass>org.exemple.demo.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <!--
+        <resources>
+            <resource>
+                <directory>src/main/resources/filtered</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/raw</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        -->
+    </build>
+
+    <!-- =========================================================================================================== -->
+    <!--                                Filtrer des fichiers ressources                                              -->
+    <!-- =========================================================================================================== -->
+    <!--
+     Les fichiers ressources sont des fichiers qui n'ont pas à être compilés, mais simplement copiés dans le livrable
+     généré par Maven. Par convention, ces fichiers se trouvent dans le répertoire src/main/resources (répertoire à
+     créer si besoin).
+
+     Un peu plus haut, je vous disais qu'il était possible de dire à Maven de remplacer les propriétés par leur valeurs
+     dans des fichiers en filtrant les fichiers ressource.
+
+     Voyons tout de suite un exemple. Vous avez un fichier info.properties chargé par votre application et vous voulez
+     mettre dans ce fichier une propriété contenant la version du projet :
+
+              1) Vous mettez ce fichier dans le répertoire src/main/resources.
+
+              2) Dans ce fichier, vous utilisez la même syntaxe que dans le fichier pom.xml :
+
+                      # Propriété contenant la version du projet
+                      org.exemple.demo.version=${project.version}
+
+              3) Ensuite vous indiquez à Maven, dans le fichier pom.xml, de filtrer les fichiers du répertoire
+                 src/main/resources avec la balise <filtering> :
+
+                      <resources>
+                          <resource>
+                              <directory>src/main/resources</directory>
+                              <filtering>true</filtering>
+                          </resource>
+                      </resources>
+
+
+     Si vous avez des fichiers à ne pas filtrer dans le répertoire src/main/resources, il est possible de faire des
+     sous-répertoires dans ce dernier afin d'organiser vos fichiers.
+
+
+                  Voici un exemple où seulement les fichiers du sous-dossier filtered doivent être filtrés :
+                  🗁 src/main/resources
+                  ├── 🗁 filtered
+                  │   └── 🗎 info.properties
+                  └── 🗁 raw
+                      └── 🗎 fichierX
+
+                                    <build>
+                                        <resources>
+                                            <resource>
+                                                <directory>src/main/resources/filtered</directory>
+                                                <filtering>true</filtering>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/main/resources/raw</directory>
+                                                <filtering>false</filtering>
+                                            </resource>
+                                        </resources>
+                                    </build>
+
+        Je vous invite à consulter la documentation car le filtrage ne s'arrête pas à cela. Il est notamment possible
+        d'importer la valeur des propriétés utilisées lors du filtrage depuis des fichiers properties externes avec la
+        balise <filters>.
+
+        Si vous voulez aller plus loin sur la configuration du build dans le POM, vous pouvez consulter la documentation.
+ -->
+
+    <!-- =========================================================================================================== -->
+    <!--                                        Les profils                                                          -->
+    <!-- =========================================================================================================== -->
+    <!--
+    Les profils permettent de créer des options dans le build Maven.
+
+    Vous pouvez par exemple envisager deux environnements cibles (un de test, un de production) et embarquer, dans le JAR
+    généré, des fichiers de configurations différents en fonction de la cible. Pour cela, pas besoin de mettre à la main les
+    bons fichiers dans le répertoire src/main/resources avant le build. Il suffit de créer deux profils (test et prod),
+    chacun définissant un répertoire de fichiers ressources différent :
+    -->
+    <profiles>
+        <!-- Profil pour l'environnement de test -->
+        <profile>
+            <id>test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/conf-test</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <!-- Profil pour l'environnement de production -->
+        <profile>
+            <id>prod</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/conf-prod</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <!--
+       Il ne vous reste plus qu'à mettre les fichiers de configuration de test et de production dans leur répertoire
+       ressource respectif et d'activer le bon profil lors du lancement du build Maven grâce à l'option -P :
+
+       # Pour construire un livrable pour l'environnement de test :
+       mvn package -P test
+
+       # Pour construire un livrable pour l'environnement de production :
+       mvn package -P prod
+    -->
+
+    <!-- =========================================================================================================== -->
+    <!--                                     Activation automatique des profils                                      -->
+    <!-- =========================================================================================================== -->
+    <!--
+    Les profils peuvent également être activés automatiquement en fonction de certains critères définis dans la
+    sous-balise <activation> :
+
+
+                          <!- Profil activé automatiquement si la version du JDK est 1.8
+                               et sous-versions mineures (1.8.0_131 par exemple)
+                          <profile>
+                              <activation>
+                                  <jdk>1.8</jdk>
+                              </activation>
+
+                          </profile>
+
+                          - Profil activé automatiquement si la propriété système "environnement" vaut "test" -
+                          <profile>
+                              <activation>
+                                  <property>
+                                      <name>environnement</name>
+                                      <value>test</value>
+                                  </property>
+                              </activation>
+
+                          </profile>
+
+    Vous comprendrez encore mieux l'intéret des profils quand vous aborderez la deuxième partie de ce cours, dans
+    laquelle je vous montrerai comment fonctionne le build Maven et comment l'adapter parfaitement à votre projet.
+
+    PASSER A projet_maven2
+    -->
+
+</project>
