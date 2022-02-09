@@ -47,7 +47,7 @@
         <maPropriete>la valeur de la propriété</maPropriete>
         <uneAutrePropriete>la valeur de la propriété</uneAutrePropriete>
 
-        <apache.struts.version>2.5.10.1</apache.struts.version>
+        <apache.struts.version>2.5.26</apache.struts.version>
     </properties>
 
     <!--
